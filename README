@@ -19,3 +19,54 @@ wget https://github.com/zfsonlinux/zfs-auto-snapshot/archive/master.zip
 unzip master.zip
 cd zfs-auto-snapshot-master
 make install
+
+
+Usage:
+------
+
+Listing snapshots
+
+zfs list -t snapshot 
+
+
+Accessing snapshot data to recover files:
+
+cd zfs_dataset_mount_point/.zfs/snapshot
+ls
+
+
+Tuning:
+-------
+
+Getting zfs settings:
+
+# control if to backup this dataset at all
+zfs get com.sun:auto-snapshot rpool/home/user
+# tune each backup separately
+zfs get com.sun:auto-snapshot:frequent rpool/home/user
+zfs get com.sun:auto-snapshot:hourly rpool/home/user
+zfs get com.sun:auto-snapshot:daily rpool/home/user
+zfs get com.sun:auto-snapshot:weekly rpool/home/user
+zfs get com.sun:auto-snapshot:monthly rpool/home/user
+
+
+Setting each setting:
+
+zfs set com.sun:auto-snapshot=false rpool/home/user
+zfs set com.sun:auto-snapshot:frequent=false rpool/home/user
+zfs set com.sun:auto-snapshot:hourly=false rpool/home/user
+zfs set com.sun:auto-snapshot:daily=false rpool/home/user
+zfs set com.sun:auto-snapshot:weekly=false rpool/home/user
+zfs set com.sun:auto-snapshot:monthly=false rpool/home/user
+
+To reset to default value from parent dataset you can use:
+
+zfs inherit com.sun:auto-snapshot=false rpool/home/user
+
+
+
+
+
+
+
+
